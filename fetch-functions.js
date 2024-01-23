@@ -10,7 +10,7 @@ export const getFirstTwentyImages = async () => {
     for (let i = 0; i < 20; i++) {
       const item = collection.items[i];
       res.push({
-        href: item.href,
+        imageUrl: await getImageSizes(item.href),
         title: item.data[0].title,
         photogropher: item.data[0].photogropher,
         location: item.data[0].location,
