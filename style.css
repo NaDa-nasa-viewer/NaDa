@@ -63,6 +63,19 @@ h1 {
   color: #888;
 }
 
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.image {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
