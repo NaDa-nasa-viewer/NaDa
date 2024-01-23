@@ -63,7 +63,7 @@ h1 {
   color: #888;
 }
 
-.image-container {
+.image-list {
   display: flex;
   align-items: center;
   justify-content: center;
