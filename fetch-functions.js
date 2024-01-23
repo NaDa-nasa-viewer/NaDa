@@ -24,3 +24,15 @@ export const getFirstTwentyImages = async () => {
     return null;
   }
 };
+
+export const getImageSizes = async (href) => {
+  try {
+    const data = await fetch(href);
+    if (!data.ok) throw new Error('Failed to get image');
+    const images = await data.json();
+    return images[0];
+  } catch (err) {
+    console.warn(err);
+    return null;
+  }
+};
