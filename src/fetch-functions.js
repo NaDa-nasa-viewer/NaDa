@@ -10,7 +10,7 @@ export const getFirstTwentyImages = async () => {
     for (let i = 0; i < 20; i++) {
       const item = collection.items[i];
       res.push({
-        href: item.href,
+        imageUrl: await getImageSizes(item.href),
         title: item.data[0].title,
         photographer: item.data[0].photographer,
         location: item.data[0].location,
@@ -20,6 +20,18 @@ export const getFirstTwentyImages = async () => {
       });
     }
     return res;
+  } catch (err) {
+    console.warn(err);
+    return null;
+  }
+};
+
+export const getImageSizes = async (href) => {
+  try {
+    const data = await fetch(href);
+    if (!data.ok) throw new Error('Failed to get image');
+    const images = await data.json();
+    return images[0];
   } catch (err) {
     console.warn(err);
     return null;
