@@ -12,10 +12,11 @@ export const getFirstTwentyImages = async () => {
       res.push({
         href: item.href,
         title: item.data[0].title,
-        photogropher: item.data[0].photogropher,
+        photographer: item.data[0].photographer,
         location: item.data[0].location,
         description: item.data[0].description,
         dateCreated: item.data[0].date_created,
+        keywords: item.data[0].keywords
       });
     }
     return res;
