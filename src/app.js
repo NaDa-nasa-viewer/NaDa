@@ -11,9 +11,10 @@ const handleSubmit = async (e) => {
   }
  
   const imageListEl = document.querySelector('.image-list')
-  // imageListEl.innerHTML = ''
   const images = await getFormImages(formObj)
+  
   console.log(formObj)
+
   renderImageList(imageListEl, images)
 
 
