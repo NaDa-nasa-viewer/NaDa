@@ -72,8 +72,9 @@ h1 {
 }
 
 .image {
-  margin-left: 1rem;
-  margin-right: 1rem;
+  padding: 1rem;
+  max-width: 50%;
+  max-height: 50%;
 }
 
 button {
