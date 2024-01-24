@@ -1,5 +1,5 @@
-import { getFirstTwentyImages } from './fetch-functions';
-import { renderForm } from '../render';
+// import { getFirstTwentyImages } from './fetch-functions';
+import { renderForm } from './render';
 
 import { getFirstTwentyImages, getImageSizes } from './fetch-functions';
 import { renderImageList } from './render';
