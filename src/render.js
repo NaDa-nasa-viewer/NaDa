@@ -121,9 +121,37 @@ export const renderImageList = (imageListEl, images) => {
     img.alt = image.title;
 
     img.dataset.imageUrl = image.imageUrl;
+    img.dataset.title = image.title;
+    img.dataset.photographer = image.photographer ?? 'Not Found';
+    img.dataset.location = image.location ?? 'Not Found';
+    img.dataset.description = image.description ?? 'Not Found';
+    img.dataset.dateCreated = image.dateCreated ?? 'Not Found';
 
     li.append(img);
 
     imageListEl.appendChild(li);
   }
+};
+
+export const renderImageInfo = (imageInfoEl, image) => {
+  imageInfoEl.innerHTML = ``;
+
+  const h2 = document.createElement('h2');
+  h2.textContent = image.dataset.title;
+
+  const h3 = document.createElement('h3');
+  h3.textContent = `Photographer: ${image.dataset.photographer}`;
+
+  const img = document.createElement('img');
+  img.src = image.dataset.imageUrl;
+  img.alt = `A picture of ${image.dataset.title}`;
+
+  const p1 = document.createElement('p');
+  p1.textContent = `Description: ${image.dataset.description}`;
+  const p2 = document.createElement('p');
+  p2.textContent = `Location: ${image.dataset.location}`;
+  const p3 = document.createElement('p');
+  p3.textContent = `Date: ${image.dataset.dateCreated}`;
+
+  imageInfoEl.append(h2, h3, img, p1, p2, p3);
 };

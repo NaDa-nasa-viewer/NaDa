@@ -1,8 +1,8 @@
 const url = 'https://images-api.nasa.gov/search';
 
-export const getFirstTwentyImages = async () => {
+export const getFirstTwentyImages = async (query = 'space') => {
   try {
-    const data = await fetch(`${url}?q=space&media_type=image`);
+    const data = await fetch(`${url}?q=${query}&media_type=image`);
     if (!data.ok) throw new Error('Failed to get images');
     const { collection } = await data.json();
     console.log(collection)
@@ -16,7 +16,7 @@ export const getFirstTwentyImages = async () => {
         // location: item.data[0].location,
         description: item.data[0].description,
         dateCreated: item.data[0].date_created,
-        keywords: item.data[0].keywords
+        keywords: item.data[0].keywords,
       });
     }
     return res;
@@ -31,7 +31,7 @@ export const getImageSizes = async (href) => {
     const data = await fetch(href);
     if (!data.ok) throw new Error('Failed to get image');
     const images = await data.json();
-    return images[0];
+    return images[images.length - 2];
   } catch (err) {
     console.warn(err);
     return null;
