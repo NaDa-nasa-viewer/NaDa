@@ -2,6 +2,7 @@ export const renderImageList = (imageListEl, images) => {
   imageListEl.innerHTML = ``;
   for (const image of images) {
     const li = document.createElement('li');
+    li.classList.add('image');
     const img = document.createElement('img');
 
     img.src = image.imageUrl;
