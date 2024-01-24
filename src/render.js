@@ -1,58 +1,116 @@
-const dropdownDiv = document.createElement('div')
-dropdownDiv.id = 'dropdowns'
+const filterDiv = document.createElement('div')
+filterDiv.id = 'filters'
 
 
-const addOptions = (optionsArr, id, labelText) => {
+const addOptions = (optionsArr, id, labelText, name, defaultValue='') => {
   const selectElLabel = document.createElement('label');
   selectElLabel.htmlFor = id;
   selectElLabel.textContent = labelText;
   const selectEl = document.createElement('select');
   selectEl.id = id;
+  selectEl.name = name;
+
+  const defaultOption = document.createElement('option')
+  defaultOption.value = defaultValue
+  defaultOption.textContent = defaultValue || 'Any'
+  defaultOption.selected = 'selected'
+  selectEl.append(defaultOption)
+
   for (const selection of optionsArr) {
     const option = document.createElement('option');
     option.value = selection;
     option.textContent = selection;
     selectEl.append(option);
-    dropdownDiv.append(selectElLabel, selectEl)
+    filterDiv.append(selectElLabel, selectEl)
   }
+  return selectEl
 };
 
 
 export const renderForm = (appDiv) => {
-  const form = document.createElement('form')
-  form.id = form
+  const form = document.createElement('form');
+  form.id = 'form';
 
-  const h2 = document.createElement('h2')
-  h2.textContent = 'Search NASA Database:'
+  const h2 = document.createElement('h2');
+  h2.textContent = 'Search NASA Database:';
 
-  const formDesc = document.createElement('p')
-  formDesc.textContent = 'explain the form goofball'
+  const formDesc = document.createElement('p');
+  formDesc.textContent = 'explain the form goofball';
 
-  const searchLabel = document.createElement('label')
-  searchLabel.htmlFor = 'search'
-  searchLabel.textContent = 'type something -> '
+  const searchLabel = document.createElement('label');
+  searchLabel.htmlFor = 'search';
+  searchLabel.textContent = 'type something -> ';
 
-  const searchInput = document.createElement('input')
-  searchInput.type = 'text'
-  searchInput.id = 'search'
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.id = 'search';
+  searchInput.name = 'q'; // all-encompassing metadata search parameter
+  // add a default value to allow submission with no manual input?
+
+  const filterH3 = document.createElement('h3')
+  filterH3.textContent = 'Apply filters: '
+  filterDiv.append(filterH3)
+
+  const keywords = ['MOON', 'STAR', 'JUPITER', 'PLANET', 'ASTRONAUT', 'ASTEROID', 'BLACK HOLE', 'HUBBLE', 'GALAXY', 'SATELLITE'].sort();
+  addOptions(keywords, 'keyword-filter', 'filter by keyword: ', 'keywords');
+
+  const photographers = ['Bridget Caswell', 'Eric Bordelon', 'Bill Ingalls', 'Josh Varcarcel', 'Desiree Stover', 'Bill Stafford', 'Jordan Salkin', 'Jeff Janis', 'Jim Ross', 'Norah Moran'];
+  addOptions(photographers, 'photographer-filter', 'photographer: ', 'photographer');
+
+  const pageSizes = [10, 30, 50];
+  addOptions(pageSizes, 'page-size-select', 'number of images: ', 'page_size', 20);
 
 
-  const keywords = ['MOON', 'STAR', 'JUPITER', 'PLANET', 'ASTRONAUT', 'ASTEROID', 'BLACK HOLE', 'HUBBLE', 'GALAXY', 'SATELLITE'].sort()
-  addOptions(keywords, 'keyword-filter', 'filter by keyword')
+  const yearDiv = document.createElement('div');
+  yearDiv.id = 'year-inputs'
+  // convert the resulting formData to a string before making requests
+  const currentYear = new Date().getFullYear();
 
-  const photographers = ['Bridget Caswell', 'Eric Bordelon', 'Bill Ingalls', 'Josh Varcarcel', 'Desiree Stover', 'Bill Stafford', 'Jordan Salkin', 'Jeff Janis']
+  const yearStartInput = document.createElement('input');
+  yearStartInput.type = 'number';
+  yearStartInput.min = 1920;
+  yearStartInput.max = currentYear;
+  yearStartInput.id = 'year-start';
+  yearStartInput.value = 1920;
+  yearStartInput.name = 'year_start'
+
+  const yearStartLabel = document.createElement('label');
+  yearStartLabel.htmlFor = yearStartInput.id;
+  yearStartLabel.textContent = 'Year min: '
+
+  const yearEndInput = document.createElement('input');
+  yearEndInput.type = 'number';
+  yearEndInput.min = 1920;
+  yearEndInput.max = currentYear;
+  yearEndInput.id = 'year-end';
+  yearEndInput.value = currentYear;
+  yearEndInput.placeholder = `Max ${currentYear}`
+  yearEndInput.name = 'year_end'
+
+  const yearEndLabel = document.createElement('label');
+  yearEndLabel.htmlFor = yearEndInput.id;
+  yearEndLabel.textContent = 'Year max: ';
+
+  yearDiv.append(yearStartLabel, yearStartInput, yearEndLabel, yearEndInput);
+  filterDiv.append(yearDiv)
   
-  addOptions(photographers, 'photographer-filter', 'photographer')
 
 
   // gimme a minute for the options
-  const submit = document.createElement('button')
-  submit.textContent = 'Search'
+  const submit = document.createElement('button');
+  submit.textContent = 'Search';
   
-  form.append(h2, formDesc, searchLabel, searchInput, dropdownDiv, submit)
-  appDiv.append(form)
-  return {h2, formDesc, searchLabel, searchInput, dropdownDiv, submit}
-}
+  const clearAll = document.createElement('button');
+  clearAll.type = 'reset';
+  clearAll.textContent = 'Reset Filters';
+
+  // give everything a name...
+  form.append(h2, formDesc, searchLabel, searchInput, filterDiv, submit, clearAll);
+  appDiv.append(form);
+  return {form, h2, formDesc, searchLabel, searchInput, filterDiv, submit, clearAll };
+};
+
+
 export const renderImageList = (imageListEl, images) => {
   imageListEl.innerHTML = ``;
   for (const image of images) {

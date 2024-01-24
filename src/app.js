@@ -1,12 +1,28 @@
 // import { getFirstTwentyImages } from './fetch-functions';
-import { renderForm } from './render';
+import { renderForm, renderImageList } from './render';
+import { getFirstTwentyImages, getFormImages, getImageSizes } from './fetch-functions';
 
-import { getFirstTwentyImages, getImageSizes } from './fetch-functions';
-import { renderImageList } from './render';
+// form submission
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  const formObj = Object.fromEntries(new FormData(form))
+  for (const data in formObj) {
+    if(!formObj[data]) delete formObj[data]
+  }
+ 
+  const imageListEl = document.querySelector('.image-list')
+  // imageListEl.innerHTML = ''
+  const images = await getFormImages(formObj)
+  console.log(formObj)
+  renderImageList(imageListEl, images)
+
+
+
+
+}
 
 export default async function app(appDiv) {
-
-  renderForm(appDiv)
+  const { form } = renderForm(appDiv);
 
   const imageListEl = document.createElement('ul');
   imageListEl.classList.add('image-list');
@@ -17,4 +33,6 @@ export default async function app(appDiv) {
   console.log('images', images);
   // Render
   renderImageList(imageListEl, images);
+
+  form.addEventListener('submit', handleSubmit);
 }
