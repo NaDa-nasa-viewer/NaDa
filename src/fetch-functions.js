@@ -1,8 +1,8 @@
 const url = 'https://images-api.nasa.gov/search';
 
-export const getFirstTwentyImages = async (query = 'space') => {
+export const getFirstTwentyImages = async (query='q=space') => {
   try {
-    const data = await fetch(`${url}?q=${query}&media_type=image`);
+    const data = await fetch(`${url}?${query}&media_type=image`);
     if (!data.ok) throw new Error('Failed to get images');
     const { collection } = await data.json();
     console.log(collection)
@@ -47,11 +47,40 @@ export const getFormImages = async (formObj) => {
   //Object { pageSize: "20" }
 
   let queryStr = ''
+  if(!formObj.q) formObj.q='space'
   for (const [data, value] of Object.entries(formObj)) {
-    queryStr += `${data}=${value.replaceAll(' ', '%20')}&`
+
+
+    queryStr += `${data}=${value.replaceAll(' ', '%20')}&` 
   }
 
   queryStr = queryStr.slice(0, -1)
   console.log(queryStr)
+
+  return await getFirstTwentyImages(queryStr)
+  
+  try {
+    const data = await fetch(`${url}?q=space&media_type=image`);
+    if (!data.ok) throw new Error('Failed to get images');
+    const { collection } = await data.json();
+    console.log(collection)
+    const res = [];
+    for (let i = 0; i < 20; i++) {
+      const item = collection.items[i];
+      res.push({
+        imageUrl: await getImageSizes(item.href),
+        title: item.data[0].title,
+        photographer: item.data[0].photographer,
+        // location: item.data[0].location,
+        description: item.data[0].description,
+        dateCreated: item.data[0].date_created,
+        keywords: item.data[0].keywords
+      });
+    }
+    return res;
+  } catch (err) {
+    console.warn(err);
+    return null;
+  }
   
 }
