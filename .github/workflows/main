@@ -15,4 +15,4 @@ jobs:
 
     - name: Use Secret
       env:
-        MY_SECRET: ${{ secrets.MY_SECRET }}
+        KEY: ${{ secrets.API_KEY }}
