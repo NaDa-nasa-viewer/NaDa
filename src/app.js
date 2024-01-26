@@ -1,6 +1,5 @@
-// import { getFirstTwentyImages } from './fetch-functions';
 import { renderForm, renderImageInfo, renderImageList } from './render';
-import { getFirstTwentyImages, getFormImages, getImageSizes } from './fetch-functions';
+import { getImages, getFormImages } from './fetch-functions';
 
 // form submission
 const handleSubmit = async (e) => {
@@ -16,10 +15,6 @@ const handleSubmit = async (e) => {
   console.log(formObj)
 
   renderImageList(imageListEl, images)
-
-
-
-
 }
 
 export default async function app(appDiv) {
@@ -47,7 +42,7 @@ export default async function app(appDiv) {
   appDiv.append(imageInfoEl);
 
   // Fetch images
-  const images = await getFirstTwentyImages();
+  const images = await getImages();
   console.log('images', images);
   // Render
   renderImageList(imageListEl, images);

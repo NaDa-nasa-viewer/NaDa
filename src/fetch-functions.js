@@ -1,6 +1,6 @@
 const url = 'https://images-api.nasa.gov/search';
 
-export const getFirstTwentyImages = async (query='q=space', pageSize = 20) => {
+export const getImages = async (query='q=space', pageSize = 20) => {
   try {
     const data = await fetch(`${url}?${query}&media_type=image`);
     if (!data.ok) throw new Error('Failed to get images');
@@ -13,9 +13,9 @@ export const getFirstTwentyImages = async (query='q=space', pageSize = 20) => {
         imageUrl: await getImageSizes(item.href),
         title: item.data[0].title,
         photographer: item.data[0].photographer,
-        // location: item.data[0].location,
+        location: item.data[0].location,
         description: item.data[0].description,
-        dateCreated: item.data[0].date_created,
+        dateCreated: item.data[0].date_created.slice(0,10),
         keywords: item.data[0].keywords,
       });
     }
@@ -39,19 +39,36 @@ export const getImageSizes = async (href) => {
 };
 
 export const getFormImages = async (formObj) => {
-  //possible object examples
-
-  // all values selected:
-  //Object { q: "v", keywords: "MOON", photographer: "Jim Ross", page_size: "20", year_start: "1920", year_end: "2024"; }
-  // no values selected
-  //Object { pageSize: "20" }
-
   let queryStr = ''
+
   for (const [data, value] of Object.entries(formObj)) {
     queryStr += `${data}=${value.replaceAll(' ', '%20')}&` 
   }
 
   queryStr = queryStr.slice(0, -1)
   
-  return await getFirstTwentyImages(queryStr, formObj.page_size)
-}
+  return await getImages(queryStr, formObj.page_size)
+};
+
+// export const getAPOD = async (key) => {
+//   try {
+//     const data = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${key}`);
+//     if (!data.ok) throw new Error('Failed to get images');
+//     const { title, copyright, hdurl, explanation } = await data.json();
+
+//     console.log(explanation)
+//     // console.log(response)
+//     const res = {
+//       title,
+//       copyright,
+//       explanation,
+//       src: hdurl
+//     }
+
+//     return res;
+//   } catch (err) {
+//     console.warn(err);
+//     return null;
+//   }
+
+// }
