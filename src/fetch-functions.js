@@ -50,25 +50,25 @@ export const getFormImages = async (formObj) => {
   return await getImages(queryStr, formObj.page_size)
 };
 
-export const getAPOD = async (key) => {
-  try {
-    const data = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${key}`);
-    if (!data.ok) throw new Error('Failed to get images');
-    const { title, copyright, hdurl, explanation } = await data.json();
+// export const getAPOD = async (key) => {
+//   try {
+//     const data = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${key}`);
+//     if (!data.ok) throw new Error('Failed to get images');
+//     const { title, copyright, hdurl, explanation } = await data.json();
 
-    console.log(explanation)
-    // console.log(response)
-    const res = {
-      title,
-      copyright,
-      explanation,
-      src: hdurl
-    }
+//     console.log(explanation)
+//     // console.log(response)
+//     const res = {
+//       title,
+//       copyright,
+//       explanation,
+//       src: hdurl
+//     }
 
-    return res;
-  } catch (err) {
-    console.warn(err);
-    return null;
-  }
+//     return res;
+//   } catch (err) {
+//     console.warn(err);
+//     return null;
+//   }
 
-}
+// }

@@ -1,5 +1,5 @@
-import { renderForm, renderImageInfo, renderImageList, renderAPOD } from './render';
-import { getImages, getFormImages, getAPOD } from './fetch-functions';
+import { renderForm, renderImageInfo, renderImageList } from './render';
+import { getImages, getFormImages } from './fetch-functions';
 
 // form submission
 const handleSubmit = async (e) => {
@@ -18,9 +18,6 @@ const handleSubmit = async (e) => {
 }
 
 export default async function app(appDiv) {
-  const apod = await getAPOD(process.env.KEY)
-  renderAPOD(apod, appDiv)
-
   renderForm(appDiv);
 
   const modal = document.createElement('dialog');

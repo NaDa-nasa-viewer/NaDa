@@ -1,28 +1,28 @@
-export const renderAPOD = (apod, appDiv) => {
-  const apodDiv = document.createElement('div')
-  apodDiv.id = 'apod'
+//const renderAPOD = (apod, appDiv) => {
+//   const apodDiv = document.createElement('div')
+//   apodDiv.id = 'apod'
 
-  const h2 = document.createElement('h2')
-  const date = new Date()
-  h2.textContent = `Astrology Picture of the Day: ${date.toDateString()}`
-  const apodImg = document.createElement('img');
-  apodImg.src = apod.src || 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/NGC2207%2BIC2163.jpg/640px-NGC2207%2BIC2163.jpg'
-  apodImg.id = 'apod-img'
+//   const h2 = document.createElement('h2')
+//   const date = new Date()
+//   h2.textContent = `Astrology Picture of the Day: ${date.toDateString()}`
+//   const apodImg = document.createElement('img');
+//   apodImg.src = apod.src || 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/NGC2207%2BIC2163.jpg/640px-NGC2207%2BIC2163.jpg'
+//   apodImg.id = 'apod-img'
 
-  const description = document.createElement('div')
-  const title = document.createElement('h3')
-  title.textContent = `${apod.title}` || 'NGC2207+IC2163'
+//   const description = document.createElement('div')
+//   const title = document.createElement('h3')
+//   title.textContent = `${apod.title}` || 'NGC2207+IC2163'
 
-  const credit = document.createElement('p')
-  credit.textContent = `Credit/Copyright: ${apod.copyright}` || 'NASA/ESA and The Hubble Heritage Team (STScI)'
+//   const credit = document.createElement('p')
+//   credit.textContent = `Credit/Copyright: ${apod.copyright}` || 'NASA/ESA and The Hubble Heritage Team (STScI)'
 
-  const explanation = document.createElement('p')
-  explanation.textContent = `Description: ${apod.explanation}` || 'Near colliding NGC 2207 and IC 2163 as seen by the NASA/ESA Hubble Space Telescope.'
+//   const explanation = document.createElement('p')
+//   explanation.textContent = `Description: ${apod.explanation}` || 'Near colliding NGC 2207 and IC 2163 as seen by the NASA/ESA Hubble Space Telescope.'
 
-  description.append(title, credit, explanation)
-  apodDiv.append(h2, apodImg, description)
-  appDiv.append(apodDiv)
-  };
+//   description.append(title, credit, explanation)
+//   apodDiv.append(h2, apodImg, description)
+//   appDiv.append(apodDiv)
+//   };
 
 const mainfilterDiv = document.createElement('div');
 mainfilterDiv.id = 'main-filters'
@@ -160,12 +160,6 @@ export const renderForm = (appDiv) => {
 
 export const renderImageList = (imageListEl, images) => {
   imageListEl.innerHTML = ``;
-
-  // if (!images) {
-  //   const errorP = document.createElement('p')
-  //   errorP.textContent = 'No matches were found'
-  //   imageListEl.append(errorP)
-  // }
   for (const image of images) {
     const li = document.createElement('li');
     li.classList.add('image');
