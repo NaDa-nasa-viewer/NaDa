@@ -1,6 +1,5 @@
-// import { getFirstTwentyImages } from './fetch-functions';
-import { renderForm, renderImageInfo, renderImageList } from './render';
-import { getFirstTwentyImages, getFormImages, getImageSizes } from './fetch-functions';
+import { renderForm, renderImageInfo, renderImageList, renderAPOD } from './render';
+import { getImages, getFormImages, getAPOD } from './fetch-functions';
 
 // form submission
 const handleSubmit = async (e) => {
@@ -16,13 +15,12 @@ const handleSubmit = async (e) => {
   console.log(formObj)
 
   renderImageList(imageListEl, images)
-
-
-
-
 }
 
 export default async function app(appDiv) {
+  const apod = await getAPOD(process.env.KEY)
+  renderAPOD(apod, appDiv)
+
   renderForm(appDiv);
 
   const modal = document.createElement('dialog');
@@ -47,7 +45,7 @@ export default async function app(appDiv) {
   appDiv.append(imageInfoEl);
 
   // Fetch images
-  const images = await getFirstTwentyImages();
+  const images = await getImages();
   console.log('images', images);
   // Render
   renderImageList(imageListEl, images);
